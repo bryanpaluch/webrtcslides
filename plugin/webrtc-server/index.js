@@ -21,7 +21,13 @@ io.sockets.on('connection', function(socket) {
 	socket.on('fragmentchanged', function(fragmentData) {
 		socket.broadcast.emit('fragmentdata', fragmentData);
 	});
-  
+  socket.on('remote_connected', function(){
+    console.log('remote connected');
+  });
+  socket.on('remote', function(data){
+    console.log('remote command', data);
+    io.sockets.in('offerer').emit('remote_command', data);
+  });
   socket.on('rtc_init_receiver', function(data){
     console.log('received joined');
     this.join('receiver');
@@ -36,7 +42,7 @@ io.sockets.on('connection', function(socket) {
     console.log(data);
     io.sockets.in('offerer').emit('rtc_answer', data);
   });
-
+  
   socket.on('rtc_request', function(data){
     console.log(data);
     io.sockets.in('receiver').emit('rtc_request', data);
@@ -56,7 +62,9 @@ app.get("/receiver", function(req, res){
 app.get("/", function(req, res) {
 	fs.createReadStream(opts.baseDir + '/index.html').pipe(res);
 });
-
+app.get("/remote", function(req, res){
+  fs.createReadStream(opts.baseDir + '/plugin/webrtc-server/controller.html').pipe(res);
+});
 app.get("/notes/:socketId", function(req, res) {
 
 	fs.readFile(opts.baseDir + 'plugin/notes-server/notes.html', function(err, data) {
@@ -76,7 +84,7 @@ var brown = '\033[33m',
 
 var slidesLocation = "http://localhost" + ( opts.port ? ( ':' + opts.port ) : '' );
 
-console.log( brown + "reveal.js - Speaker Notes" + reset );
+console.log( brown + "reveal.js - WebRTC Server and Speaker Notes" + reset );
 console.log( "1. Open the slides at " + green + slidesLocation + reset );
 console.log( "2. Click on the link your JS console to go to the notes page" );
 console.log( "3. Advance through your slides and your notes will advance automatically" );

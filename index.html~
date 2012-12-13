@@ -549,7 +549,7 @@
     <h2>STUn/ICE</h2>
     <div style="text-align: left;">
         <ul>
-            <li>ICE tl;dr</li>
+            <li>ICE in a nutshell</li>
             <li>Get your IP addresses using STUN</li>
             <li>Bind ip/port combinations using STUN (Candidates)</li>
             <li>Share those candidates with peers, and respond to their connectivity checks</li>
