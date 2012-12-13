@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+    <section>        <h3>
+        <font face="League Gothic">webrtc + nodejs</font>
+    </h3>
+        <div>
+            <font face="League Gothic">
+                <br>
+            </font>
+        </div>
+        <div>
+            <font face="League Gothic">
+                <br>
+            </font>
+        </div>
+        <div>
+            <font face="League Gothic">
+                <br>
+            </font>
+        </div>
+        <div>
+            <font face="League Gothic">
+                <br>
+            </font>
+        </div>
+        <div>
+            <font face="League Gothic">
+                <br>
+            </font>
+        </div>
+        <div>
+            <font face="League Gothic">
+                <br>
+            </font>
+        </div>
+        <div>
+    <font face="League Gothic">&nbsp;Bryan Paluch @letthisbemywrit</font>
+        </div>
+</section>
+<section>
+    <section>        <h3 style="text-align: center;">
+            <font face="League Gothic">WHAT?</font>
+        </h3>
+        <div style="text-align: left;">
+            <ul>
+                <li>WebRTC is a javascript API that is being drafted by W3C which enables Voice, Video and Data communications between peers and servers.</li>
+                <li>Its a Media and Streaming Engine for your browser.</li>
+                <li>It also gets around NAT issues using ICE...</li>
+    <li>NAT issues? Huh?&nbsp;</li>
+            </ul>
+        </div>
+</section>
+<section>
+    <h2>Real Time Communication = UDP</h2>
+    <div style="text-align: left;">
+        <ul>
+            <li>The web is built on TCP/IP but TCP doesn't work very well for real time communication.</li>
+            <li>With tcp lost packets are resent</li>
+            <li>A resent packet is an old frame and is dropped anyway</li>
+            <li>Communication uses RTP and RTCP</li>
+            <li>RTP/RTCP uses UDP</li>
+            <li>UDP can be tricky to route in a NAT</li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h2>NAT/<font face="League Gothic">Firewal</font>ls</h2>
+    <div style="text-align: left;">
+        <ul>
+            <li>NATs don't typically like UDP traffic coming from unknown sources</li>
+            <li>Your home router doesn't know you want to chat with your friends so it doesn't allow your friends UDP packets to come into your home network</li>
+        </ul>
+        <div>
+            <br>
+        </div>
+        <div>
+            <br>
+        </div>
+        <div>So hey router I uh have some friends that I want to chat with if I send them my ip address and a port number can they just send an RTP stream my way?</div>
+        <div>
+            <br>
+        </div>
+    </div>
+</section>
+<section>
+    <h2>NO</h2>
+    <h2>
+        <img src="http://i.imgur.com/XXKum.jpg">
+        <br>
+    </h2>
+    <div>Well err, what if I use a defined protocol like SIP so you know everything is on the up and up, and you know which IP their traffic will be coming from?</div>
+</section>
+<section>
+    <h2>NO<br>
+    </h2>
+    <h2>
+        <img src="http://i.imgur.com/XXKum.jpg">
+    </h2>
+    <div>Well Hmm what if I use STUN (Session Traversal Utilities for NAT) / ICE and we do some confusing UDP binding tricks</div>
+</section>
+<section>
+    <h2 style="">OK BUT ITS YOUR FUNERAL</h2>
+    <h2>
+        <img src="http://i.imgur.com/XXKum.jpg">
+    </h2>
+    <div>
+        <br>
+    </div>
+</section>
+<section>
+    <h2>STUn/ICE</h2>
+    <div style="text-align: left;">
+        <ul>
+            <li>ICE in a nutshell</li>
+            <li>Get your IP addresses using STUN</li>
+            <li>Bind ip/port combinations using STUN (Candidates)</li>
+            <li>Share those candidates with peers, and respond to their connectivity checks</li>
+            <li>If a connectivity check works, send RTP</li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h2>
+        <img src="http://i.imgur.com/Lbkov.png">
+        <br>
+    </h2>
+</section>
+</section>
+<section>
+    <section>   <h2>
+            <font face="League Gothic">Why</font>
+        </h2>
+        <div style="text-align: left;">
+            <ul>
+                <li>
+                    <font face="League Gothic">Plugins Suck. Nobody wants to rely on plugins.</font>
+    </li>
+                <li>
+                    <font face="League Gothic">Building your own voice/video engine is difficult</font>
+                </li>
+                <li>
+                    <font face="League Gothic">Even if you do, it may not work with someone else's. Interop Nightmares.</font>
+    </li>
+                <li>
+                    <font face="League Gothic">Devices are finally powerful enough</font>
+                </li>
+                <li>
+                    <font face="League Gothic">Pressure for most platforms to implement similar API's / Standards</font>
+</li>
+<li>
+    <font face="League Gothic">Lowers barrier to entry for communication services on the browser</font>
+    </li>
+            </ul>
+        </div>
+</section>
+<section>
+    <h2>
+        <img src="http://i.imgur.com/Cm4NQ.png" style="line-height: 1.2em; font-family: Lato, Times, 'Times New Roman', serif; font-size: 36px; letter-spacing: -0.02em;">
+    </h2>
+</section>
+</section>
+<section>
+    <section>
+        <h2>How?</h2>
+<code>
+
+JSEP or Javascript Session&nbsp;Establishment&nbsp;Protocol</code>
+        <div>
+            <pre>
+                <font face="monospace">var pc = RTCPeerConnection(config);<br>
+                </font>
+                <font face="monospace">pc.onIceCandidate = someFunction;<br>
+                </font>
+                <font face="monospace">pc.addStream(StreamFromGetUserMedia);<br>
+                </font>
+                <font face="monospace">pc.createOffer(setAndSend, null, constraints);<br>
+                </font>
+                <font face="monospace">function SetAndSend(sessionDescription){
+pc.setLocalDescription(sessionDescription);
+io.emit('rtc_request', sessionDescription);
+//Wait what? Signaling?
+}</font>
+            </pre>
+        </div>
+    </section>
+    <section>
+        <h2>Remote</h2>
+        <div style="text-align: left;">
+            <pre>
+                <font face="monospace">
+                    <span style="white-space: pre;">io.on('rtc_request', function(data){<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">//Do everything on the previous slide except creating an offer<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">  pc.setRemoteDescription(new RTCSessionDescription(data));<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">  pc.createAnswer(SetLocalAndSendMessage,null, constraints);<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">});<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">function SetLocalAndSendMessage(sdp){<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">  pc.setLocalDescription(streamFromGetUserMedia);<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">  io.emit('rtc_answer', sdp);<br>
+                    </span>
+                </font>
+                <font face="monospace">
+                    <span style="white-space: pre;">}</span>
+                </font>
+            </pre>
+        </div>
+    </section>
+    <section>
+        <h2>Local Again</h2>
+        <pre>io.on('rtc_answer', function(data){
+  pc.setRemoteDescription(new SessionDescription(data));
+  //onRemoteStreamAdded will get called now
+});
+function onRemoteStreamAdded(event){
+  remoteVideo.src = webkitURL.createObjectURL(event.stream);
+  //Then wait for video
+}
+
+//I left out what happens with ICE candidates
+// really good example at https://apprtc.appspot.com
+</pre>
+    </section>
+</section>
+<section>
+    <h2>RTCWEB</h2>
+    <div style="text-align: left;">
+        <ul>
+            <li>An IETF activity to define the formats and protocols used to communicate browsers</li>
+            <li>Highlights</li>
+            <li>Mandatory to Implement Codecs</li>
+            <li>PCMU/PCMA/OPUS</li>
+            <li>VP8 or H264?</li>
+            <li>Multiplexing RTP/RTCP</li>
+            <li>Secure RTP (Encryption Methods)</li>
+            <li>No Signalling Defined</li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h2>Signaling?</h2>
+    <div style="text-align: left;">
+        <ul>
+            <li>No defined method of doing signaling with webrtc</li>
+            <li>Roll your own</li>
+            <li>Socket.io / Websockets are a great transports</li>
+            <li>Nodejs makes building any kind of signaling engine easy</li>
+            <li>Demo rtcwith.me</li>
+        </ul>
+    </div>
+    <div style="">
+        <br>
+    </div>
+</section>
+<section>
+    <section>
+        <h2>Telecoms are cool too</h2>
+        <div style="text-align: left;">
+            <ul>
+                <li>The PSTN was the original Cloud</li>
+                <li>We have this great network that nobody wants to use anymore.&nbsp;</li>
+                <li>We are still trying to innovate on communications.</li>
+                <li>eg. video set top boxes, video cell phone calling,</li>
+                <li>RCS, Rich communication Suite</li>
+                <li>We should open up our network to allow webrtc clients to use our services</li>
+                <li>But how?</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>RTCWeb Gateways</h2>
+        <div style="text-align: left;">
+            <ul>
+                <li style="">Gateway that allows webrtc clients to talk to other types of communication clients</li>
+                <li style="">Handles Media/RTP interop</li>
+                <li style="">Allows media to flow into a protected network</li>
+                <li style="">No standards defined</li>
+                <li style="">Will make webrtc applications awesome</li>
+                <li style="">Will allow for webrtc verticals to use communication services from providers.</li>
+                <li style="">Calls from browser to phones/set top boxes are possible</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>Not&nbsp;COMPLETELY&nbsp;working demo alert!</h2>
+        <div style="text-align: left;">
+            <ul>
+                <li>Firewalls issues will make the call fail</li>
+                <li>But you will get the idea</li>
+                <li>rtcwith.me phone in chat</li>
+            </ul>
+        </div>
+    </section>
+</section>
+<section>
+    <h2>Questions?</h2>
+    <div style="text-align: left;">
+        <ul>
+            <li>Want to create your own webrtc vertical?</li>
+            <li>
+                <a href="https://github.com/bryanpaluch/webrtc-to-me">https://github.com/bryanpaluch/webrtc-to-me</a>
+                <br>
+            </li>
+            <li>
+                <a href="https://github.com/bryanpaluch/jsep-to-sip-gw">https://github.com/bryanpaluch/jsep-to-sip-gw</a>
+                <br>
+            </li>
+        </ul>
+        <div>
+            <br>
+        </div>
+        <div>
+            <br>
+        </div>
+        <div>
+            <br>
+        </div>
+        <ul>
+            <li>@letthisbemywrit</li>
+            <li>bryanpaluch@gmail.com</li>
+        </ul>
+    </div>
+</section>
+</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				//	 { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
