@@ -65,6 +65,9 @@ app.get("/", function(req, res) {
 app.get("/remote", function(req, res){
   fs.createReadStream(opts.baseDir + '/plugin/webrtc-server/controller.html').pipe(res);
 });
+app.get("/remote2", function(req, res){
+  fs.createReadStream(opts.baseDir + '/plugin/webrtc-server/controller2.html').pipe(res);
+});
 app.get("/notes/:socketId", function(req, res) {
 
 	fs.readFile(opts.baseDir + 'plugin/notes-server/notes.html', function(err, data) {
