@@ -13,6 +13,19 @@ var opts = {
 	port :      1947,
 	baseDir :   __dirname + '/../../'
 };
+var os = require('os');
+
+function getAddresses(cb){
+  var interfaces = os.networkInterfaces();
+  for (k in interfaces){
+      for (k2 in interfaces[k]){
+        var address = interfaces[k][k2];
+        if(address.family == 'IPv4' && !address.internal){
+          cb(address.address);
+        }
+      }
+  }
+}
 
 io.sockets.on('connection', function(socket) {
 	socket.on('slidechanged', function(slideData) {
@@ -87,7 +100,7 @@ var brown = '\033[33m',
 
 var slidesLocation = "http://localhost" + ( opts.port ? ( ':' + opts.port ) : '' );
 
-console.log( brown + "reveal.js - WebRTC Server and Speaker Notes" + reset );
-console.log( "1. Open the slides at " + green + slidesLocation + reset );
-console.log( "2. Click on the link your JS console to go to the notes page" );
-console.log( "3. Advance through your slides and your notes will advance automatically" );
+console.log( brown + "reveal.js - WebRTC Server and socket.io remote control" + reset );
+getAddresses(function(address){
+  console.log('Your server is listening on http://' + address + ':1947/');
+});
